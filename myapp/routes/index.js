@@ -6,7 +6,7 @@ var router = express.Router();
  * @returns Renders the index.ejs view
  */
 router.get('/', function(req, res, next) {
-  res.render('index',{page:'Fun platform to play', menuId:'home'});
+  res.render('index',{page:'Welcome to our Chatbot service', menuId:'home'});
 });
 
 module.exports = router;
