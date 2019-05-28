@@ -8,6 +8,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var clientRouter = require('./routes/client');
+var clientauthRouter = require('./routes/clientauth');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/client', clientRouter);
+app.use('/cauth',clientauthRouter);
 
 //https://expressjs.com/en/resources/middleware/cors.html
 app.use(cors());
