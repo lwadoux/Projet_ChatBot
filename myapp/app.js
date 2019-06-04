@@ -7,8 +7,9 @@ var logger = require('morgan');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var letschatRouter = require('./routes/letschat');
+var clientRouter = require('./routes/client');
+var clientauthRouter = require('./routes/clientauth');
 
 var app = express();
 
@@ -23,7 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/client', clientRouter);
+app.use('/cauth',clientauthRouter);
 app.use('/letschat', letschatRouter);
 
 //https://expressjs.com/en/resources/middleware/cors.html
