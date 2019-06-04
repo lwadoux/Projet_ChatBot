@@ -8,7 +8,7 @@ var router = express.Router();
  * @summary Define the GET brain
  * @returns
  */
-router.get('/', function(req, res, next) {
+router.get('/:brainName', function(req, res, next) {
     //must render a JSON with the brain
     //TODO: url with brain name, JSON
 });

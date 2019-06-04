@@ -13,22 +13,31 @@ router.get('/', function(req, res, next) {
     //TODO: url with bot name, JSON
 });
 
-/**@function CREATE Bot
+/**@function POST Bot
  * @summary Define the creation of a brain
  * @returns
  */
-router.create('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     //takes a JSON to create a bot ? or create a json from parameters in the url ?
-    //TODO: url with brain characteristics, JSON
+    //TODO: url with bot characteristics, JSON
 });
 
-/**@function POST Bot
+/**@function PUT Bot
  * @summary Define the modification of a brain
  * @returns
  */
-router.post('/', function(req, res, next) {
+router.put('/', function(req, res, next) {
     //must modify a parameter (in the url) of the brain
-    //TODO: url with brain name, JSON
+    //TODO: url with bot name, JSON
+});
+
+/**@function DELETE Bot
+ * @summary Define the deletion of a brain
+ * @returns
+ */
+router.delete('/', function(req, res, next) {
+    //must delete the brain with this name
+    //TODO: url with bot name, JSON
 });
 
 module.exports = router;
