@@ -9,8 +9,8 @@ var router = express.Router();
  * @returns JSON file of the bot
  */
 router.get('/:botName', function(req, res, next) {
-    //must render a JSON with the bot
-    //TODO: JSON
+    //TODO: MongoDB + look for bot in DB + send also brainName
+    res.json({ botName : req.params.botName});
 });
 
 /**@function POST Bot
