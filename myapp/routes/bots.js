@@ -14,7 +14,7 @@ router.get('/:botName', function(req, res, next) {
 });
 
 /**@function POST Bot
- * @summary Define the creation of a brain
+ * @summary Define the creation of a bot
  * @returns
  */
 router.post('/:botName-:brainName', function(req, res, next) {
@@ -23,7 +23,7 @@ router.post('/:botName-:brainName', function(req, res, next) {
 });
 
 /**@function PUT Bot
- * @summary Define the modification of a brain
+ * @summary Define the modification of a bot
  * @returns
  */
 router.put('/:botName-:brainName', function(req, res, next) {
@@ -32,7 +32,7 @@ router.put('/:botName-:brainName', function(req, res, next) {
 });
 
 /**@function DELETE Bot
- * @summary Define the deletion of a brain
+ * @summary Define the deletion of a bot
  * @returns
  */
 router.delete('/:botName', function(req, res, next) {
