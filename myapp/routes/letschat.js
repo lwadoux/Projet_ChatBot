@@ -2,6 +2,10 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var RiveScript = require('rivescript');
+//Require Mongoose
+var mongoose = require('mongoose');
+//Require bot model
+var Bot = require('../models/bot');
 var router = express.Router();
 
 
@@ -16,14 +20,21 @@ router.get('/:botid', function(req, res, next) {
 router.post('/:id/reply', function(req, res, next) {
     var bot = new RiveScript();
 
-    if(req.params.id==1){
-        // Load an individual brain file
-        bot.loadFile("brains/standard.rive").then(botready).catch(loaderror);
-    }
-    else{
-        // Load an individual brain file
-        bot.loadFile("brains/test.rive").then(botready).catch(loaderror);
-    }
+    query = Bot.find({ id:req.params.id },function (err, results) {
+        if (err) {
+            console.log('Query error (bot id)');
+            res.json({status : "Query error (bot id)"});
+        }
+        else if (!results.length) {
+            console.log('Incorrect bot id');
+            res.json({status : "Incorrect bot id"});
+        }
+        else{
+            var botstats = results[0];
+            // Load an individual brain file
+            bot.loadFile("brains/"+botstats.brainName+".rive").then(botready).catch(loaderror);
+        }
+    });
 
     function botready() {
         console.log("Bot loaded");
