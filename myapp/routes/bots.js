@@ -57,7 +57,7 @@ router.post('/:id-:botName-:brainName-:isOn-:interface', function(req, res, next
  * @summary Define the modification of a bot
  * @returns
  */
-router.put('/:id-:parameterName-:parameterValue', function(req, res, next) {
+router.put('/:id', function(req, res, next) {
     query = Bot.find({ id:req.params.id },function (err, results) {
         if (err) {
             console.log('Query error (bot id)');
@@ -69,16 +69,25 @@ router.put('/:id-:parameterName-:parameterValue', function(req, res, next) {
         }
         else{
             var bot = results[0];
-            var parameterN = req.params.parameterName;
-            var parameterV = req.params.parameterValue;
-            bot.parameterN = parameterV;
+            if(req.body.botName!==undefined){
+                bot.botName = req.body.botName;
+            }
+            if(req.body.brainName!==undefined){
+                bot.brainName = req.body.brainName;
+            }
+            if(req.body.isOn!==undefined){
+                bot.isOn = req.body.isOn;
+            }
+            if(req.body.interface!==undefined){
+                bot.interface = req.body.interface;
+            }
             bot.save().then(() => {
                 // Bot saved
                 console.log("Bot saved !");
                 res.json({ id: req.params.id, botName: bot.botName, brainName: bot.brainName, isOn: bot.isOn, interface: bot.interface});
             })
                 .catch((err) => {
-                    console.log("Database error, bot not saved");
+                    console.log("Database error, bot not saved"+err);
                     res.json({status : "Database error, bot not saved"});
                 });
         }
