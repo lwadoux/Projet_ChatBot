@@ -14,6 +14,18 @@ var botsRouter = require('./routes/bots');
 
 var app = express();
 
+//Set up mongodb connection
+//Requires the mongoose module
+var mongoose = require('mongoose');
+//Set up default mongoose connection
+var mongoDB = 'mongodb+srv://lwadoux:ProjetNode!432@projetnodejs-lg7xc.azure.mongodb.net/ProjetChatbot?retryWrites=true';
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
