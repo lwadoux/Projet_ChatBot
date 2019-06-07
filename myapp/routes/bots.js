@@ -13,8 +13,18 @@ var router = express.Router();
  * @returns JSON file of the bot
  */
 router.get('/:id', function(req, res, next) {
-    //TODO: MongoDB + look for bot in DB + send also brainName
-    res.json({ botName : req.params.botName});
+    query = Bot.find({ id:req.params.id },function (err, results) {
+        if (err) {
+            console.log('Query error (bot id)');
+        }
+        else if (!results.length) {
+            console.log('Incorrect bot id');
+        }
+        else{
+            var bot = results[0];
+            res.json({ id: req.params.id, botName: results[0].botName, brainName: results[0].brainName, isOn: results[0].isOn, interface: results[0].interface});
+        }
+    });
 });
 
 /**@function POST Bot
