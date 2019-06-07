@@ -9,15 +9,21 @@ var router = express.Router();
  * @summary Define the GET bot
  * @returns
  */
-router.get('/', function(req, res, next) {
-    res.render('discuss');
+router.get('/:botid', function(req, res, next) {
+    res.render('discuss',{botid: JSON.stringify(req.params.botid)});
 });
 
-router.post('/reply', function(req, res, next) {
+router.post('/:id/reply', function(req, res, next) {
     var bot = new RiveScript();
 
-    // Load an individual brain file
-    bot.loadFile("brains/standard.rive").then(botready).catch(loaderror);
+    if(req.params.id==1){
+        // Load an individual brain file
+        bot.loadFile("brains/standard.rive").then(botready).catch(loaderror);
+    }
+    else{
+        // Load an individual brain file
+        bot.loadFile("brains/test.rive").then(botready).catch(loaderror);
+    }
 
     function botready() {
         console.log("Bot loaded");

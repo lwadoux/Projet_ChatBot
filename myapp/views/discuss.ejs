@@ -26,12 +26,14 @@
           var content = $('#inputsituveux').val();
           $('#inputsituveux').val("");
 
+          var botid = JSON.parse(<%- botid%>);
+
           history.append('> ' + content + '\n');
           if(history.length)
             history.scrollTop(history[0].scrollHeight - history.height());
 
           $.ajax({
-            url: "/letschat/reply",
+            url: "/letschat/"+botid+"/reply",
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',
