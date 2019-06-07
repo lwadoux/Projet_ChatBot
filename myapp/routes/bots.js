@@ -16,13 +16,15 @@ router.get('/:id', function(req, res, next) {
     query = Bot.find({ id:req.params.id },function (err, results) {
         if (err) {
             console.log('Query error (bot id)');
+            res.json({status : "Query error (bot id)"});
         }
         else if (!results.length) {
             console.log('Incorrect bot id');
+            res.json({status : "Incorrect bot id"});
         }
         else{
             var bot = results[0];
-            res.json({ id: req.params.id, botName: results[0].botName, brainName: results[0].brainName, isOn: results[0].isOn, interface: results[0].interface});
+            res.json({ id: req.params.id, botName: bot.botName, brainName: bot.brainName, isOn: bot.isOn, interface: bot.interface});
         }
     });
 });
@@ -43,11 +45,12 @@ router.post('/:id-:botName-:brainName-:isOn-:interface', function(req, res, next
     bot.save().then(() => {
         // Bot saved
         console.log("Bot saved !");
+        res.json({ status: "ok"});
     })
         .catch((err) => {
-            console.log("Database error, bot not saved")
+            console.log("Database error, bot not saved");
+            res.json({status : "Database error, bot not saved"});
         });
-    //TODO: MongoDB + JSON
 });
 
 /**@function PUT Bot
@@ -55,8 +58,31 @@ router.post('/:id-:botName-:brainName-:isOn-:interface', function(req, res, next
  * @returns
  */
 router.put('/:id-:parameterName-:parameterValue', function(req, res, next) {
-    //must modify a parameter (in the url) of the brain
-    //TODO: JSON
+    query = Bot.find({ id:req.params.id },function (err, results) {
+        if (err) {
+            console.log('Query error (bot id)');
+            res.json({status : "Query error (bot id)"});
+        }
+        else if (!results.length) {
+            console.log('Incorrect bot id');
+            res.json({status : "Incorrect bot id"});
+        }
+        else{
+            var bot = results[0];
+            var parameterN = req.params.parameterName;
+            var parameterV = req.params.parameterValue;
+            bot.parameterN = parameterV;
+            bot.save().then(() => {
+                // Bot saved
+                console.log("Bot saved !");
+                res.json({ id: req.params.id, botName: bot.botName, brainName: bot.brainName, isOn: bot.isOn, interface: bot.interface});
+            })
+                .catch((err) => {
+                    console.log("Database error, bot not saved");
+                    res.json({status : "Database error, bot not saved"});
+                });
+        }
+    });
 });
 
 /**@function DELETE Bot
