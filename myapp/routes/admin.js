@@ -14,15 +14,23 @@ var bodyParser = require('body-parser');
 
 /**@function GET admin
  * @summary Define the GET admin page
- * @returns Renders the admin.ejs view, with no error message
+ * @returns Renders the admin.ejs view
  */
 router.get('/', function(req, res, next) {
     res.render('admin', {page:'WELCOME', menuId:'ADMIN'});
 });
 
-/**@function GET admin
+/**@function GET admin/create
+ * @summary Define the creation page of a bot
+ * @returns Renders the botcreate.ejs view
+ */
+router.get('/create', function(req, res, next) {
+    res.render('botcreate', {page:'WELCOME', menuId:'ADMIN'});
+});
+
+/**@function GET admin/:id
  * @summary Define the GET the administration page of an existing bot
- * @returns Renders the admin.ejs view, with no error message
+ * @returns Renders the botmodif.ejs view of the target bot
  */
 router.get('/:id', function(req, res, next) {
     query = Bot.find({ id:req.params.id },function (err, results) {
@@ -41,6 +49,7 @@ router.get('/:id', function(req, res, next) {
         }
     });
 });
+
 
 
 module.exports = router;

@@ -9,6 +9,7 @@
 <p>Welcome to the administrator page !</p>
 <p>Please choose a bot to edit :</p>
 <ul id="botlist" style="margin: auto;"></ul>
+<input type="button" id="create" value="Create bot">
 
 <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -31,6 +32,10 @@
         error: function (err) {
             console.log("Error loading bot list")
         }
+    });
+
+    $('#create').click(function(){
+        window.location.replace("/admin/create");
     });
 </script>
 

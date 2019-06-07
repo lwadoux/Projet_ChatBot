@@ -38,11 +38,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 app.use('/client', clientRouter);
 app.use('/cauth',clientauthRouter);
 app.use('/letschat', letschatRouter);
 app.use('/bots', botsRouter);
-app.use('/admin', adminRouter);
 
 
 //https://expressjs.com/en/resources/middleware/cors.html
