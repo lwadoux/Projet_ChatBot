@@ -3,7 +3,10 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 //Require Mongoose
 var mongoose = require('mongoose');
+//Require bot model
+var Bot = require('../models/bot');
 var router = express.Router();
+
 
 /**@function GET Bot
  * @summary Define the get method for a bot
@@ -18,7 +21,22 @@ router.get('/:id', function(req, res, next) {
  * @summary Define the creation of a bot
  * @returns
  */
-router.post('/:id-:botName-:brainName-:isOn', function(req, res, next) {
+router.post('/:id-:botName-:brainName-:isOn-:interface', function(req, res, next) {
+    // Create a bot object
+    var bot = new Bot({
+        id: req.params.id,
+        botName: req.params.botName,
+        brainName: req.params.brainName,
+        isOn: req.params.isOn,
+        interface: req.params.interface});
+    // Save the bot in the database
+    bot.save().then(() => {
+        // Bot saved
+        console.log("Bot saved !");
+    })
+        .catch((err) => {
+            console.log("Database error, bot not saved")
+        });
     //TODO: MongoDB + JSON
 });
 
