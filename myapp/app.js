@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var letschatRouter = require('./routes/letschat');
 var clientRouter = require('./routes/client');
 var clientauthRouter = require('./routes/clientauth');
+var adminRouter = require('./routes/admin');
 var botsRouter = require('./routes/bots');
 
 var app = express();
@@ -41,6 +42,7 @@ app.use('/client', clientRouter);
 app.use('/cauth',clientauthRouter);
 app.use('/letschat', letschatRouter);
 app.use('/bots', botsRouter);
+app.use('/admin', adminRouter);
 
 
 //https://expressjs.com/en/resources/middleware/cors.html

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include head %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<% include menu %>
+<p>Welcome to the edition page of <%= botName%></p>
+<p>Please choose a bot to edit :</p>
+<TABLE id="tabstats" BORDER="1" style="margin: auto;">
+    <CAPTION style="margin: auto;"> Bot properties </CAPTION>
+    <TR>
+        <TH> ID </TH>
+        <TH> Bot name </TH>
+        <TH> Brain name </TH>
+        <TH> Activated ? </TH>
+        <TH> Interface </TH>
+    </TR>
+    <TR>
+        <TD id="IDCell"> </TD>
+        <TD> <input type="text" id="BotNameCell"> </TD>
+        <TD> <input type="text" id="BrainNameCell"> </TD>
+        <TD> <input type="checkbox" id="isOnCell"> </TD>
+        <TD> <input type="text" id="InterfaceCell"> </TD>
+    </TR>
+</TABLE>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+    $.ajax({
+        url: "/bots/"+"<%=id%>",
+        type: 'get',
+        dataType: 'json',
+        success: function (data) {
+            $('#IDCell').append(
+                data.id
+            )
+            $('#BotNameCell').val(
+                data.botName
+            )
+            $('#BrainNameCell').val(
+                data.brainName
+            )
+            $('#InterfaceCell').val(
+                data.interface
+            )
+            if(data.isOn){
+                $('#isOnCell').attr("checked",true);
+            }
+        },
+        error: function (err) {
+            console.log("Error loading bot properties")
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -7,6 +7,7 @@
   <body>
   <% include menu %>
     <p>Welcome to you !</p>
+    <p>Please choose a bot to talk to:</p>
     <ul id="botlist" style="margin: auto;"></ul>
 
   <script
@@ -20,11 +21,13 @@
       dataType: 'json',
       success: function (data) {
         for(var i =0;i<data.length;i++){
-          $('#botlist').append(
-                  $('<li>').append(
-                          $('<a>').attr('href','/letschat/'+data[i].id).append(data[i].botName)
-                  )
-          );
+          if(data[i].isOn){
+            $('#botlist').append(
+                    $('<li>').append(
+                            $('<a>').attr('href','/letschat/'+data[i].id).append(data[i].botName)
+                    )
+            );
+          }
         }
       },
       error: function (err) {
