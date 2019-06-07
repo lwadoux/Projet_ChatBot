@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include head %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<% include menu %>
+<p>Welcome to the cbot creation page</p>
+<p>Please choose the parameters of the bot you want to create:</p>
+<TABLE id="tabstats" BORDER="1" style="margin: auto;">
+    <CAPTION style="margin: auto;"> Bot properties </CAPTION>
+    <TR>
+        <TH> ID </TH>
+        <TH> Bot name </TH>
+        <TH> Brain name </TH>
+        <TH> Activated ? </TH>
+        <TH> Interface </TH>
+    </TR>
+    <TR>
+        <TD> <input type="text" id="IDCell" placeholder="Type Bot ID"> </TD>
+        <TD> <input type="text" id="BotNameCell" placeholder="Type Bot Name"> </TD>
+        <TD> <input type="text" id="BrainNameCell" placeholder="Type Brain Name"> </TD>
+        <TD> <input type="text" id="isOnCell" placeholder="true if the bot is on, false otherwise"> </TD>
+        <TD> <input type="text" id="InterfaceCell" placeholder="Interface name (internal to access in client page)"> </TD>
+    </TR>
+</TABLE>
+<input type="button" id="create" value="Create bot">
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+    $('#create').click(function(){
+        if($($('#IDCell').val()=="" ||'#BotNameCell').val()=="" || $('#BrainNameCell').val()=="" || $('#isOnCell').val()=="" || $('#InterfaceCell').val()==""){
+            window.alert("Please fill all cells");
+        }
+        else{
+            $.ajax({
+                url: "/bots/" + $('#IDCell').val() +"-"+ $('#BotNameCell').val() +"-"+  $('#BrainNameCell').val() +"-"+  $('#isOnCell').val() +"-"+  $('#InterfaceCell').val(),
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: $('#IDCell').val(), botName: $('#BotNameCell').val(), brainName: $('#BrainNameCell').val(), isOn: $('#isOnCell').val(), interface: $('#InterfaceCell').val() }),
+                success: function (data) {
+                    window.location.replace("/admin");
+                },
+                error: function (err) {
+                    console.log("Error deleting bot")
+                }
+            });
+        }
+    });
+</script>
+
+</body>

@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <% include head %>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+  <% include menu %>
+
+    <div class="">
+
+      <div class="messages"></div>
+      <div id="edge"></div>
+
+      <textarea id="cequetuveux" style="height: 500px; width: 800px; margin: auto;"></textarea>
+      <p></p>
+      <input id="inputsituveux" type="text" placeholder="press Enter to send message" style="width: 800px; margin: auto;">
+
+    </div>
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+      $('#inputsituveux').keyup(function (e) {
+        if (e.keyCode === 13) {
+          var history = $('#cequetuveux');
+          var content = $('#inputsituveux').val();
+          $('#inputsituveux').val("");
+
+          var botid = JSON.parse(<%- botid%>);
+
+          history.append('> ' + content + '\n');
+          if(history.length)
+            history.scrollTop(history[0].scrollHeight - history.height());
+
+          $.ajax({
+            url: "/letschat/"+botid+"/reply",
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({"message": content}),
+            success: function (data) {
+              history.append('# ' + data['reply'] + '\n');
+            },
+            error: function (err) {
+              history.append('! Oupsie: ' + err.responseText + '\n');
+            }
+          });
+        }
+      });
+    </script>
+
+
+  </body>
+</html>

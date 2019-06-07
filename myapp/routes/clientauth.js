@@ -8,10 +8,10 @@ var bodyParser = require('body-parser');
 
 /**@function GET client
  * @summary Define the GET client page
- * @returns Renders the client.ejs view, with no error message
+ * @returns Renders the auth.ejs view, with no error message
  */
 router.get('/', function(req, res, next) {
-    res.render('auth', {page:'WELCOME', Username:'user'});
+    res.render('auth', {page:'WELCOME', menuId:'CLIENT'});
 });
 
 module.exports = router;

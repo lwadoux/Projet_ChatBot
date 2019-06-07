@@ -7,10 +7,25 @@ var logger = require('morgan');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
+var letschatRouter = require('./routes/letschat');
 var clientRouter = require('./routes/client');
 var clientauthRouter = require('./routes/clientauth');
+var adminRouter = require('./routes/admin');
+var botsRouter = require('./routes/bots');
 
 var app = express();
+
+//Set up mongodb connection
+//Requires the mongoose module
+var mongoose = require('mongoose');
+//Set up default mongoose connection
+var mongoDB = 'mongodb+srv://lwadoux:ProjetNode!432@projetnodejs-lg7xc.azure.mongodb.net/ProjetChatbot?retryWrites=true';
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,8 +38,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 app.use('/client', clientRouter);
 app.use('/cauth',clientauthRouter);
+app.use('/letschat', letschatRouter);
+app.use('/bots', botsRouter);
+
 
 //https://expressjs.com/en/resources/middleware/cors.html
 app.use(cors());
