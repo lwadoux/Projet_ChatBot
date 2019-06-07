@@ -98,9 +98,28 @@ router.put('/:id', function(req, res, next) {
  * @summary Define the deletion of a bot
  * @returns
  */
-router.delete('/:botid', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
     //must delete the brain with this id
-    //TODO: JSON
+    query = Bot.find({ id:req.params.id },function (err, results) {
+        if (err) {
+            console.log('Query error (bot id)');
+            res.json({status: "Query error (bot id)"});
+        } else if (!results.length) {
+            console.log('Incorrect bot id');
+            res.json({status: "Incorrect bot id"});
+        } else {
+            var bot = results[0];
+            bot.remove().then(() => {
+                // Bot removed
+                console.log("Bot removed !");
+                res.json({status: "ok"});
+            })
+                .catch((err) => {
+                    console.log("Database error, bot not removed" + err);
+                    res.json({status: "Database error, bot not removed"});
+                });
+        }
+    });
 });
 
 module.exports = router;
