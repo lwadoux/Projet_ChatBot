@@ -1,7 +1,7 @@
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var Rivescript = require('Rivescript');
+var RiveScript = require('rivescript');
 var router = express.Router();
 
 
@@ -9,32 +9,43 @@ var router = express.Router();
  * @summary Define the GET bot
  * @returns
  */
-router.get('/', function(req, res, next) {
+router.get('/:botid', function(req, res, next) {
+    res.render('discuss',{botid: JSON.stringify(req.params.botid)});
+});
+
+router.post('/:id/reply', function(req, res, next) {
     var bot = new RiveScript();
 
-    // Load an individual brain file
-    bot.loadFile("brain/standard.rive").then(botready).catch(loaderror);
+    if(req.params.id==1){
+        // Load an individual brain file
+        bot.loadFile("brains/standard.rive").then(botready).catch(loaderror);
+    }
+    else{
+        // Load an individual brain file
+        bot.loadFile("brains/test.rive").then(botready).catch(loaderror);
+    }
 
     function botready() {
         console.log("Bot loaded");
         bot.sortReplies();
         let username = "local-user";
-        bot.reply(username, "Hello, bot!").then(reply).catch(replyerror);
+        let message = req.body.message;
+        bot.reply(username,message).then(reply).catch(replyerror);
     }
 
-    function reply(){
-
+    function reply(messagereply){
+        res.json(({ reply : messagereply }));
     }
 
-    function loaderror(){
+    function loaderror(data){
         console.log("Error loading bot");
+        console.log(data);
     }
 
-    function replyerror(){
-        console.log("Error reply bot");
+    function replyerror(data){
+        console.log("Error, the bot failed to reply");
+        console.log(data);
     }
-
-    res.render('index',{page:'Welcome to our Chatbot service', menuId:'home'});
 });
 
 module.exports = router;
