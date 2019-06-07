@@ -10,7 +10,7 @@ var router = express.Router();
  * @returns
  */
 router.get('/:botid', function(req, res, next) {
-    res.render('discuss',{botid: JSON.stringify(req.params.botid)});
+    res.render('discuss',{page:'Welcome to our Chatbot service', menuId:'home', botid: JSON.stringify(req.params.botid)});
 });
 
 router.post('/:id/reply', function(req, res, next) {
