@@ -8,6 +8,26 @@ var Bot = require('../models/bot');
 var router = express.Router();
 
 
+/**@function GET Bots
+ * @summary Define the get method for the list of all bots
+ * @returns JSON file of the bot
+ */
+router.get('/', function(req, res, next) {
+    query = Bot.find(function (err, results) {
+        if (err) {
+            console.log('Query error (bot id)');
+            res.json({status : "Query error (bot id)"});
+        }
+        else if (!results.length) {
+            console.log('Incorrect bot id');
+            res.json({status : "Incorrect bot id"});
+        }
+        else{
+            res.json(results);
+        }
+    });
+});
+
 /**@function GET Bot
  * @summary Define the get method for a bot
  * @returns JSON file of the bot

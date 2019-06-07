@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= page %></title>
+    <% include head %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <p>Welcome to you <%= Username %></p>
-    <button class="favorite styled"
-        type="button">
-        Talk to a bot!
-</button>
+  <% include menu %>
+    <p>Welcome to you !</p>
+    <ul id="botlist" style="margin: auto;"></ul>
 
+  <script
+          src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+  <script>
+    $.ajax({
+      url: "/bots/",
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        for(var i =0;i<data.length;i++){
+          $('#botlist').append(
+                  $('<li>').append(
+                          $('<a>').attr('href','/letschat/'+data[i].id).append(data[i].botName)
+                  )
+          );
+        }
+      },
+      error: function (err) {
+        console.log("Error loading bot list")
+      }
+    });
+  </script>
 
   </body>
 </html>

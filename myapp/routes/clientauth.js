@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
  * @returns Renders the client.ejs view, with no error message
  */
 router.get('/', function(req, res, next) {
-    res.render('auth', {page:'WELCOME', Username:'user'});
+    res.render('auth', {page:'WELCOME', menuId:'client'});
 });
 
 module.exports = router;
